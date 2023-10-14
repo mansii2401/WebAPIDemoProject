@@ -8,10 +8,16 @@ namespace WebAPIDemoProject.Repositories
         {
         }
 
-        public T? Get(int id) 
-       {    
-            this.Reload(); 
-            return table.FirstOrDefault(x => x.Id == id);
+        public T? Get(int id)
+        {
+            this.Reload();
+            return table.FirstOrDefault(x => x.UserId == id);
+        }
+
+        public List<T> Get()
+        {
+            this.Reload();
+            return table;
         }
 
         public T Add(T newItem, bool calculateId = true)
@@ -20,11 +26,11 @@ namespace WebAPIDemoProject.Repositories
             {
                 if (table.Count > 0)
                 {
-                    newItem.Id = table.Last().Id + 1;
+                    newItem.UserId = table.Last().UserId + 1;
                 }
                 else
                 {
-                    newItem.Id = 1;
+                    newItem.UserId = 1;
                 }
             }
             table.Add(newItem);
@@ -34,14 +40,14 @@ namespace WebAPIDemoProject.Repositories
 
         public void Delete(int id)
         {
-            table.RemoveAll(x =>x.Id == id);
+            table.RemoveAll(x => x.UserId == id);
             this.SaveChanges();
         }
 
-        public void Update(T updatedItem) 
+        public void Update(T updatedItem)
         {
-           var index = table.FindIndex(x => x.Id == updatedItem.Id);
-            if(index > -1)
+            var index = table.FindIndex(x => x.UserId == updatedItem.UserId);
+            if (index > -1)
             {
                 table[index] = updatedItem;
                 this.SaveChanges();

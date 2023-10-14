@@ -1,18 +1,19 @@
-﻿namespace WebAPIDemoProject.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace WebAPIDemoProject.Entities
 {
     public class UserDetail : BaseCRUD
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string UserEmail { get; set; }
 
-        public string Email { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public UserRole Role { get; set; }
 
-        public string Location { get; set; }
-
-        public UserType Type { get; set; }
-
-        public enum UserType
+        public enum UserRole
         {
-            Teacher,
+            Employee,
             Student
         }
     }

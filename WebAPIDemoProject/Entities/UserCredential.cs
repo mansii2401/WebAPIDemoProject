@@ -1,12 +1,9 @@
 ﻿namespace WebAPIDemoProject.Entities
 {
-    public class UserCredential: BaseCRUD
+    public class UserCredential : BaseCRUD
     {
-        
-
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string Password { get; set; }
-
     }
 }

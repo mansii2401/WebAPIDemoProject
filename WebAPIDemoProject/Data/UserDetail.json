@@ -1,0 +1,16 @@
+[
+  {
+    "FirstName": "Mishu",
+    "LastName": "Mishra",
+    "UserEmail": "mishu@gmail.com",
+    "Role": "Employee",
+    "UserId": 1
+  },
+  {
+    "FirstName": "Mishu",
+    "LastName": "Mishra",
+    "UserEmail": "mishu@gmail.com",
+    "Role": "Student",
+    "UserId": 3
+  }
+]

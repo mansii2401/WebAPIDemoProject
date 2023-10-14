@@ -1,46 +1,51 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WebAPIDemoProject.Repositories
 {
     public abstract class JsonRepository<T> where T : class
     {
-        
-            private string path;
 
-            protected List<T> table;
+        JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Converters = { new JsonStringEnumConverter() }
+        };
+        private string path;
 
-            public JsonRepository(string tableName)
+        protected List<T> table;
+
+        public JsonRepository(string tableName)
+        {
+            path = "Data/" + tableName + ".json";
+            table = getListFromFile();
+        }
+
+        protected void SaveChanges()
+        {
+            saveListToFile(table);
+        }
+
+        protected void Reload()
+        {
+            table = getListFromFile();
+        }
+
+        private List<T> getListFromFile()
+        {
+            if (File.Exists(path))
             {
-                path = tableName + ".json";
-                table = getListFromFile();
+                var jsonData = File.ReadAllText(path);
+                return JsonSerializer.Deserialize<List<T>>(jsonData, serializerOptions) ?? new List<T>();
             }
+            else { return new List<T>(); }
+        }
 
-            protected void SaveChanges()
-            {
-                saveListToFile(table);
-            }
-
-            protected void Reload()
-            {
-                table = getListFromFile();
-            }
-
-            private List<T> getListFromFile()
-            {
-                if (File.Exists(path))
-                {
-                    var jsonData = File.ReadAllText(path);
-                    return JsonSerializer.Deserialize<List<T>>(jsonData) ?? new List<T>();
-                }
-                else { return new List<T>(); }
-            }
-
-            private void saveListToFile(List<T> todoList)
-            {
-                var serializerOptions = new JsonSerializerOptions { WriteIndented = true };
-                var jsonString = JsonSerializer.Serialize(todoList, serializerOptions);
-                File.WriteAllText(path, jsonString);
-            }
+        private void saveListToFile(List<T> todoList)
+        {
+            var jsonString = JsonSerializer.Serialize(todoList, serializerOptions);
+            File.WriteAllText(path, jsonString);
         }
     }
+}
 
