@@ -14,6 +14,24 @@ namespace WebAPIDemoProject.Services
             _scoreListRepository = scoreListRepository;
         }
 
+        public Response<ScoreList> Get(int userId)
+        {
+            var scoreList = _scoreListRepository.Get(userId);
+            if (scoreList == null)
+            {
+                return new Response<ScoreList>
+                {
+                    StatusMessage = "User Score not found"
+                };
+            }
+
+            return new Response<ScoreList>
+            {
+                Result = scoreList,
+                StatusMessage = "Success"
+            };
+        }
+
         public Response<ScoreList> AddOrUpdate(ScoreList scoreList)
         {
             var marksheet = scoreList.Marksheet;

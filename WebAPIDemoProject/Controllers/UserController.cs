@@ -23,6 +23,19 @@ namespace WebAPIDemoProject.Controller
         {
             return _userDetailService.GetAll();
         }
+
+        [HttpGet("UserDetails/{id}")]
+        public Response<UserDetail> GetUserDetailsById(int id)
+        {
+            return _userDetailService.GetById(id);
+        }
+
+        [HttpGet("ScoreList/{userId}")]
+        public Response<ScoreList> GetScoreDetails(int userId)
+        {
+            return _scoreListService.Get(userId);
+        }
+
         [HttpPost("ScoreList")]
         public ActionResult<Response<ScoreList>> AddScoreDetails(ScoreList scoreList)
         {

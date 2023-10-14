@@ -22,5 +22,23 @@ namespace WebAPIDemoProject.Services
                 StatusMessage = "Success"
             };
         }
+
+        public Response<UserDetail> GetById(int id)
+        {
+            var userDetail = _userDetailRepository.Get(id);
+            if (userDetail == null)
+            {
+                return new Response<UserDetail>
+                {
+                    StatusMessage = "User not found"
+                };
+            }
+
+            return new Response<UserDetail>
+            {
+                Result = userDetail,
+                StatusMessage = "Success"
+            };
+        }
     }
 }
